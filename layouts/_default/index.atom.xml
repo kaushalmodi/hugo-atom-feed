@@ -15,11 +15,11 @@ isPlainText = false
 home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
 */}}
 {{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
-    {{- $.Scratch.Set "__feed_filename" .Permalink -}}
+    {{- $.Scratch.Set "__atom_permalink" .Permalink -}}
 {{- end -}}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
-    <link href="{{ $.Scratch.Get "__feed_filename" }}" rel="self"/>
+    <link href="{{ $.Scratch.Get "__atom_permalink" }}" rel="self"/>
     <link href="{{ .Permalink }}"/>
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
     <id>{{ .Permalink }}</id>
