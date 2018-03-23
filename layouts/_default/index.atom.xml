@@ -13,12 +13,9 @@ isPlainText = false
 
 [outputs]
 home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
-*/}}{{- $chomp := true -}}
-{{- range .OutputFormats -}}
-    {{- $output_format := . -}}
-    {{- if (eq "atom" ($output_format.Name | lower)) -}}
-        {{- $.Scratch.Set "__feed_filename" $output_format.Permalink -}}
-    {{- end -}}
+*/}}
+{{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
+    {{- $.Scratch.Set "__feed_filename" .Permalink -}}
 {{- end -}}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
