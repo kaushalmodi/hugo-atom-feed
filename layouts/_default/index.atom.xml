@@ -16,7 +16,7 @@ home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
 */}}{{- $chomp := true -}}
 {{- range .OutputFormats -}}
     {{- $output_format := . -}}
-    {{- if (eq $output_format.Name "atom") -}}
+    {{- if (eq "atom" ($output_format.Name | lower)) -}}
         {{- $.Scratch.Set "__feed_filename" $output_format.Permalink -}}
     {{- end -}}
 {{- end -}}
