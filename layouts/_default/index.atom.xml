@@ -1,21 +1,28 @@
 {{/*
-# Add below to your site config for Atom feed generation to work.
+# Adding Atom feed
 # https://gist.github.com/lpar/7ded35d8f52fef7490a5be92e6cd6937
 [mediaTypes]
-  [mediaTypes."application/atom"]
-    suffix = "atom"
+[mediaTypes."application/atom"]
+suffix = "xml"
 
 [outputFormats.Atom]
-  mediaType = "application/atom"
-  baseName = "index"
-  isPlainText = false
+# https://validator.w3.org/feed/docs/atom.html#whatIsAtom
+mediaType = "application/atom"
+baseName = "atom" # generated file = <baseName>.<mediaType."application/atom".suffix> = atom.xml
+isPlainText = false
 
 [outputs]
-  home = ["HTML", "RSS", "Atom"] # default = ["HTML", "RSS"]
+home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
 */}}{{- $chomp := true -}}
+{{- range .OutputFormats -}}
+    {{- $output_format := . -}}
+    {{- if (eq $output_format.Name "atom") -}}
+        {{- $.Scratch.Set "__feed_filename" $output_format.Permalink -}}
+    {{- end -}}
+{{- end -}}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
-    <link href="{{ .Permalink }}index.atom" rel="self"/>
+    <link href="{{ $.Scratch.Get "__feed_filename" }}" rel="self"/>
     <link href="{{ .Permalink }}"/>
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
     <id>{{ .Permalink }}</id>
