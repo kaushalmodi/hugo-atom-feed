@@ -65,5 +65,7 @@
                         , "css/style.css"
                       ]
 
+  css_lazy_load = false
+
   [Params.fontawesome]
     style = "fal" # Valid values: "fas" (Solid), "far" (Regular), "fal" (Light), "fab" (Brands)
