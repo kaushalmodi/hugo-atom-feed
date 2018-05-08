@@ -14,15 +14,21 @@ isPlainText = false
 [outputs]
 home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
 */}}
-{{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
-    {{- $.Scratch.Set "__atom_permalink" .Permalink -}}
-{{- end -}}
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
-    <link href="{{ $.Scratch.Get "__atom_permalink" }}" rel="self"/>
+    <generator>Hugo -- gohugo.io</generator>
+    <title>
+        {{- with .Title -}}
+            {{- if (not (eq . $.Site.Title)) }}
+                {{ . }} on
+            {{ end }}
+        {{ end }}
+        {{ .Site.Title -}}
+    </title>
+    {{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
+        <link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}+{{ .MediaType.Suffix }}" />
+    {{- end -}}
     <link href="{{ .Permalink }}"/>
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
-    <id>{{ .Permalink }}</id>
     {{ with .Site.Author.name -}}
         <author>
             <name>{{ . }}</name>
@@ -30,21 +36,37 @@ home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
                 <email>{{ . }}</email>
             {{ end -}}
         </author>
-    {{ end -}}
-    <generator>Hugo -- gohugo.io</generator>
+    {{- end }}
+    <id>{{ .Permalink }}</id>
     {{- range (where .Pages "Type" "in" .Site.Params.mainSections) }}
+        {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
             <link href="{{ .Permalink }}"/>
             <id>{{ .Permalink }}</id>
-            {{- range .Param "author" }}
-                <author>
-                    <name>{{ . }}</name>
-                </author>
-            {{ end -}}
+            {{ with .Params.author -}}
+                {{- range . -}} <!-- Assuming the author front-matter to be a list -->
+                    <author>
+                        <name>{{ . }}</name>
+                    </author>
+                {{- end -}}
+            {{- end }}
             <published>{{ .Date.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</published>
             <updated>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
             {{ printf `<content type="html"><![CDATA[%s]]></content>` .Content | safeHTML }}
+            {{ with .Site.Taxonomies }}
+                {{ range $taxo,$_ := . }} <!-- Defaults taxos: "tags", "categories" -->
+                    {{ with $page.Param $taxo }}
+                        {{ $taxo_list := . }} <!-- $taxo_list will be the tags/categories list -->
+                        {{ with $.Site.GetPage "taxonomyTerm" $taxo }}
+                            {{ $taxonomy_page := . }}
+                            {{ range $taxo_list }} <!-- Below, assuming pretty URLs -->
+                                <category scheme="{{ printf "%s%s" $taxonomy_page.Permalink (. | urlize) }}" term="{{ (. | urlize) }}" label="{{ . }}" />
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+            {{ end }}
         </entry>
     {{ end }}
 </feed>
