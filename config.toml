@@ -1,7 +1,3 @@
-theme = ["hugo-debugprint", "refined"]
-
-# Custom Output Formats defined: "ATOM", "JF2Post", "JF2Feed"
-
 # Atom feed
 # Add "ATOM" to the Page Kinds under [outputs] (in your site config) for which
 # you want to enable Atom feeds.
@@ -16,58 +12,3 @@ theme = ["hugo-debugprint", "refined"]
   mediaType = "application/atom"
   baseName = "atom" # generated file = <baseName>.<mediaType."application/atom".suffix> = atom.xml
   isPlainText = false
-
-# JF2 - https://www.w3.org/TR/jf2/
-# JF2 post
-# Add "JF2Post" to the Page Kinds under [outputs] (in your site config) for which
-# you want to enable JF2Post. As it is JF2 for posts, it would usually be only
-# for the "page" kind.
-# Example:
-#   [outputs]
-#     page = ["HTML", "JF2Post"]
-[mediaTypes."application/jf2post"]
-  suffix = "json"
-[outputFormats.JF2Post]
-  mediaType = "application/jf2post"
-  baseName = "jf2post" # generated file = <baseName>.<mediaType."application/jf2post".suffix> = jf2post.json
-  isPlainText = true
-
-# JF2 feed
-# Add "JF2Feed" to the Page Kinds under [outputs] (in your site config) for which
-# you want to enable Jf2Feed feeds. As it is JF2 for feeds, it would usually be only
-# for the list Page Kinds.
-# Example:
-#   [outputs]
-#     home = ["HTML", "JF2Feed"]
-#     section = ["HTML", "JF2Feed"]
-#     taxonomy = ["HTML", "JF2Feed"]
-#     taxonomyTerm = ["HTML", "JF2Feed"]
-[mediaTypes."application/jf2feed"]
-  suffix = "json"
-[outputFormats.JF2Feed]
-  mediaType = "application/jf2feed"
-  baseName = "jf2feed" # generated file = <baseName>.<mediaType."application/jf2feed".suffix> = jf2feed.json
-  isPlainText = true
-
-# Default values of custom .Site.Params
-[Params]
-  # https://github.com/tummychow/lanyon-hugo/issues/2#issuecomment-253274278
-  # Go date formats: https://golang.org/pkg/time/#pkg-constants
-  dateform = "Mon Jan 2, 2006"
-
-  themecolorbase = "red" # Valid values: "red", "orange", "yellow", "green", "cyan", "blue", "magenta", "brown"
-
-  # These inline CSS files have to live in layouts/partials/.
-  custom_inline_css = [ # Pygments Trac theme
-                        # "css/trac_pygments.css"  # Needs pygmentsUseClasses to be true
-                        # Chroma Trac theme
-                        # "css/trac_chroma.css"    # Needs pygmentsUseClasses to be true
-                        # Chroma GitHub theme
-                        "css/github_chroma.css"    # Needs pygmentsUseClasses to be true
-                        , "css/style.css"
-                      ]
-
-  css_lazy_load = false
-
-  [Params.fontawesome]
-    style = "fal" # Valid values: "fas" (Solid), "far" (Regular), "fal" (Light), "fab" (Brands)
