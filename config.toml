@@ -1,3 +1,5 @@
+theme = ["hugo-debugprint", "refined"]
+
 # Custom Output Formats defined: "ATOM", "JF2Post", "JF2Feed"
 
 # Atom feed
