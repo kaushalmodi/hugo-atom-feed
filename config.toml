@@ -10,5 +10,5 @@
 [outputFormats.Atom]
   # https://validator.w3.org/feed/docs/atom.html#whatIsAtom
   mediaType = "application/atom+xml"
-  baseName = "atom" # generated file = <baseName>.<mediaType."application/atom".suffix> = atom.xml
+  baseName = "atom" # generated file = <baseName>.<mediaType."application/atom+xml".suffixes[0]> = atom.xml
   isPlainText = false
