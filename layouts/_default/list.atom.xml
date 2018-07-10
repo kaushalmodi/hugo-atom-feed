@@ -25,7 +25,7 @@ home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
         {{ .Site.Title -}}
     </title>
     {{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
-        <link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}+{{ .MediaType.Suffix }}" />
+        <link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}" />
     {{- end -}}
     <link href="{{ .Permalink }}"/>
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>

@@ -5,10 +5,10 @@
 #   [outputs]
 #     home = ["HTML", "ATOM"]
 # https://gist.github.com/lpar/7ded35d8f52fef7490a5be92e6cd6937
-[mediaTypes."application/atom"]
-  suffix = "xml"
+[mediaTypes."application/atom+xml"]
+  suffixes = ["xml"]
 [outputFormats.Atom]
   # https://validator.w3.org/feed/docs/atom.html#whatIsAtom
-  mediaType = "application/atom"
+  mediaType = "application/atom+xml"
   baseName = "atom" # generated file = <baseName>.<mediaType."application/atom".suffix> = atom.xml
   isPlainText = false
