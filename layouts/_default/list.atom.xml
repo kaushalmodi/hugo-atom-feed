@@ -60,7 +60,7 @@ home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
                 {{ range $taxo,$_ := . }} <!-- Defaults taxos: "tags", "categories" -->
                     {{ with $page.Param $taxo }}
                         {{ $taxo_list := . }} <!-- $taxo_list will be the tags/categories list -->
-                        {{ with $.Site.GetPage "taxonomyTerm" $taxo }}
+                        {{ with $.Site.GetPage (printf "/%s" $taxo) }}
                             {{ $taxonomy_page := . }}
                             {{ range $taxo_list }} <!-- Below, assuming pretty URLs -->
                                 <category scheme="{{ printf "%s%s" $taxonomy_page.Permalink (. | urlize) }}" term="{{ (. | urlize) }}" label="{{ . }}" />
