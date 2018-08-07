@@ -1,0 +1,15 @@
+name = "Hugo Atom Feed"
+license = "GPLv3"
+licenselink = "https://github.com/kaushalmodi/hugo-atom-feed/blob/master/LICENSE"
+description = "Hugo theme component for creating ATOM feeds for Hugo 'list' pages"
+homepage = "https://scripter.co"
+tags = ["component", "feed", "atom", "output-format"]
+features = ["atom"]
+min_version = "0.45"
+
+[author]
+  name = "Kaushal Modi"
+  homepage = "https://scripter.co"
+
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
