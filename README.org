@@ -1,10 +1,22 @@
-This is not a standalone theme. This is a Hugo theme component.
+*This is not a standalone theme. This is a Hugo theme component.*
 
-To use this:
+To enable ATOM feeds for your site:
 
-1. Clone this repo to ~your-site/themes/hugo-atom-feed~ directory.
-2. Add "hugo-atom-feed" as the left-most element of the ~theme~ list variable in
-   your site's or theme's ~config.toml~. Example:
-   #+begin_example
-   theme = ["hugo-atom-feed", "my-theme"]
-   #+end_example
+1. Clone this repo to ~<your-site-dir>/themes/hugo-atom-feed~ directory.
+2. Add these your site's ~config.toml~:
+   - Add "hugo-atom-feed" as the *left-most element* of the ~theme~
+     list variable. For example:
+     #+begin_src toml
+     theme = ["hugo-atom-feed", "my-theme"]
+     #+end_src
+   - Add "ATOM" to all the Page Kinds for which you want to create
+     ATOM feeds:
+     #+begin_src toml
+     [outputs]
+       # <domain>/atom.xml
+       home = ["HTML", "RSS", "ATOM"]     # default = ["HTML", "RSS"]
+       # <domain>/posts/atom.xml
+       section = ["HTML", "RSS", "ATOM"]  # default = ["HTML", "RSS"]
+       # <domain>/tags/mytag/atom.xml, <domain>/categories/mycat/atom.xml
+       taxonomy = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
+     #+end_src

@@ -1,19 +1,3 @@
-{{/*
-# Adding Atom feed
-# https://gist.github.com/lpar/7ded35d8f52fef7490a5be92e6cd6937
-[mediaTypes]
-[mediaTypes."application/atom+xml"]
-suffixes = ["xml"]
-
-[outputFormats.Atom]
-# https://validator.w3.org/feed/docs/atom.html#whatIsAtom
-mediaType = "application/atom+xml"
-baseName = "atom" # generated file = <baseName>.<mediaType."application/atom+xml".suffixes[0]> = atom.xml
-isPlainText = false
-
-[outputs]
-home = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
-*/}}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <generator>Hugo -- gohugo.io</generator>
     <title>
