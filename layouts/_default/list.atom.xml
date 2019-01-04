@@ -2,27 +2,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <title>
         {{- with .Title -}}
-            {{- if (not (eq . $.Site.Title)) }}
+            {{- if (not (eq . site.Title)) }}
                 {{ . }} on
             {{ end }}
         {{ end }}
-        {{ .Site.Title -}}
+        {{ site.Title -}}
     </title>
     {{- with .OutputFormats.Get "atom" -}} <!-- Here, the Get is case-insensitive. -->
         <link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}" />
     {{- end -}}
     <link href="{{ .Permalink }}"/>
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
-    {{ with .Site.Author.name -}}
+    {{ with site.Author.name -}}
         <author>
             <name>{{ . }}</name>
-            {{ with $.Site.Author.email }}
+            {{ with site.Author.email }}
                 <email>{{ . }}</email>
             {{ end -}}
         </author>
     {{- end }}
     <id>{{ .Permalink }}</id>
-    {{- range (where .Pages "Type" "in" .Site.Params.mainSections) }}
+    {{- range (where .Pages "Type" "in" site.Params.mainSections) }}
         {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
@@ -40,11 +40,11 @@
             {{ $description1 := .Description | default "" }}
             {{ $description := (cond (eq "" $description1) "" (printf "<blockquote>%s</blockquote>" ($description1 | markdownify))) }}
             {{ printf `<content type="html"><![CDATA[%s%s]]></content>` $description .Content | safeHTML }}
-            {{ with .Site.Taxonomies }}
+            {{ with site.Taxonomies }}
                 {{ range $taxo,$_ := . }} <!-- Defaults taxos: "tags", "categories" -->
                     {{ with $page.Param $taxo }}
                         {{ $taxo_list := . }} <!-- $taxo_list will be the tags/categories list -->
-                        {{ with $.Site.GetPage (printf "/%s" $taxo) }}
+                        {{ with site.GetPage (printf "/%s" $taxo) }}
                             {{ $taxonomy_page := . }}
                             {{ range $taxo_list }} <!-- Below, assuming pretty URLs -->
                                 <category scheme="{{ printf "%s%s" $taxonomy_page.Permalink (. | urlize) }}" term="{{ (. | urlize) }}" label="{{ . }}" />
