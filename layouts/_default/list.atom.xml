@@ -22,7 +22,8 @@
         </author>
     {{- end }}
     <id>{{ .Permalink }}</id>
-    {{- range (where .Pages "Type" "in" site.Params.mainSections) }}
+    {{ $feed_sections := site.Params.feedSections | default site.Params.mainSections }}
+    {{- range (where .Pages "Type" "in" $feed_sections) }}
         {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
