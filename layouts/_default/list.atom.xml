@@ -22,7 +22,7 @@
         </author>
     {{- end }}
     <id>{{ .Permalink }}</id>
-    {{ $feed_sections := site.Params.feedSections | default site.Params.mainSections }}
+    {{ $feed_sections := $.Site.Params.feedSections | default site.Params.mainSections }}
     {{- range (where .Pages "Type" "in" $feed_sections) }}
         {{ $page := . }}
         <entry>
