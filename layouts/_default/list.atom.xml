@@ -82,10 +82,21 @@
         {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
+            <link href="{{ .Permalink }}?utm_source=atom_feed" rel="alternate" type="text/html" />
+            {{- range .Translations }}
+                {{- $link := printf "%s?utm_source=atom_feed" .Permalink | safeHTML }}
+                {{- printf "<link href=%q rel=\"alternate\" type=\"text/html\" hreflang=%q />" $link .Lang | safeHTML }}
+            {{- end }}
+            {{- if site.Params.comments.engine | and (index site.Params.comments.commentable .Type) | and (ne .Params.commentable false) | or .Params.commentable }}
+                <link href="{{ .Permalink }}?utm_source=atom_feed#comments" rel="service.post" type="text/html" />
+            {{- end }}
+            {{- range first 5 (site.RegularPages.Related .) }}
+                <link href="{{ .Permalink }}?utm_source=atom_feed" rel="related" type="text/html" title="{{ .Title }}" />
+            {{- end }}
             {{- $uuid := sha1 .RelPermalink }}
             <id>urn:uuid:{{substr $uuid 0 8}}-{{substr $uuid 8 4}}-5{{substr $uuid 13 3}}-{{substr $uuid 16 1}}9{{substr $uuid 17 2}}-{{substr $uuid 21 12}}</id>
             {{- with .Params.authors -}}
-                {{- range . -}} <!-- Assuming the author front-matter to be a list -->
+                {{- range . -}} <!-- Assuming the authors front-matter to be a list -->
                     {{- $author := site.GetPage (printf "/%s/%s" "authors" .) }}
                     {{- if $author.Params.name }}
                         {{- with $author }}
@@ -106,17 +117,6 @@
             {{- end }}
             <published>{{ .Date.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</published>
             <updated>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
-            <link href="{{ .Permalink }}?utm_source=atom_feed" rel="alternate" type="text/html" />
-            {{- range .Translations }}
-                {{- $link := printf "%s?utm_source=atom_feed" .Permalink | safeHTML }}
-                {{- printf "<link href=%q rel=\"alternate\" type=\"text/html\" hreflang=%q />" $link .Lang | safeHTML }}
-            {{- end }}
-            {{- if site.Params.comments.engine | and (index site.Params.comments.commentable .Type) | and (ne .Params.commentable false) | or .Params.commentable }}
-                <link href="{{ .Permalink }}?utm_source=atom_feed#comments" rel="service.post" type="text/html" />
-            {{- end }}
-            {{- range first 5 (site.RegularPages.Related .) }}
-                <link href="{{ .Permalink }}?utm_source=atom_feed" rel="related" type="text/html" title="{{ .Title }}" />
-            {{- end }}
             {{- if ne .Summary "" }}
                 {{ printf `<summary type="html"><![CDATA[%s]]></summary>` .Summary | safeHTML }}
             {{- end }}
