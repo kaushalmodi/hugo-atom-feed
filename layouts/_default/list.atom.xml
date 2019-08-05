@@ -121,8 +121,10 @@
         {{ printf `<summary type="html"><![CDATA[%s]]></summary>` .Summary | safeHTML }}
       {{- end }}
       {{- $description1 := .Description | default "" }}
-      {{- $description := (cond (eq "" $description1) "" (printf "<blockquote>%s</blockquote>" ($description1 | markdownify))) }}
-      {{ printf `<content type="html"><![CDATA[%s%s]]></content>` $description .Content | safeHTML }}
+      {{- $description := (cond (eq "" $description1) "" (printf "<blockquote>%s</blockquote>" ($description1 | markdownify | chomp ))) }}
+      {{- if and (ne .Content "") (ne $description "") }}
+        {{ printf `<content type="html"><![CDATA[%s%s]]></content>` $description .Content | safeHTML }}
+      {{- end }}
       {{- with site.Taxonomies }}
         {{- range $taxo,$_ := . }} <!-- Defaults taxos: "tags", "categories" -->
           {{- with $page.Param $taxo }}
