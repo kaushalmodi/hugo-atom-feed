@@ -32,7 +32,7 @@
         {{- $copyright = $copyright | replace "&copy;" "©" -}}
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
-    {{ with site.Param "feed" }}
+    {{ with .Param "feed" }}
         {{- $icon := .icon | default "icon-32.png" -}}
         {{- $iconpaths := printf "static/img/%s" $icon -}}
         {{- $iconpath := printf "img/%s" $icon -}}
