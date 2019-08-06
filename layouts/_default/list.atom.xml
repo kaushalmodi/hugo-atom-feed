@@ -41,8 +41,9 @@
         </author>
     {{- end }}
     <id>{{ .Permalink }}</id>
-    {{ $feed_sections := $.Site.Params.feedSections | default site.Params.mainSections }}
-    {{- range (where .Pages "Type" "in" $feed_sections) }}
+    {{- $limit := (cond (le site.Config.Services.RSS.Limit 0) 65536 site.Config.Services.RSS.Limit) }}
+    {{- $feed_sections := site.Params.feedSections | default site.Params.mainSections -}}
+    {{- range first $limit (where .Pages "Type" "in" $feed_sections) }}
         {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
