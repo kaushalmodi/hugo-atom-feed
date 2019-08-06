@@ -40,7 +40,11 @@
             {{ end -}}
         </author>
     {{- end }}
-    <id>{{ .Permalink }}</id>
+    {{ with site.Params.id }}
+        <id>{{ . | plainify }}</id>
+    {{ else }}
+        <id>{{ .Permalink }}</id>
+    {{ end }}
     {{- $limit := (cond (le site.Config.Services.RSS.Limit 0) 65536 site.Config.Services.RSS.Limit) }}
     {{- $feed_sections := site.Params.feedSections | default site.Params.mainSections -}}
     {{/* Range through only the pages with a Type in $feed_sections */}}
@@ -54,7 +58,11 @@
                 {{- $link := printf "%s?utm_source=atom_feed" .Permalink | safeHTML }}
                 {{- printf `<link href=%q rel="alternate" type="text/html" hreflang=%q />` $link .Lang | safeHTML }}
             {{- end }}
-            <id>{{ .Permalink }}</id>
+            {{ with .Params.id }}
+                <id>{{ . | plainify }}</id>
+            {{ else }}
+                <id>{{ .Permalink }}</id>
+            {{ end }}
             {{ with .Params.author -}}
                 {{- range . -}} <!-- Assuming the author front-matter to be a list -->
                     <author>
