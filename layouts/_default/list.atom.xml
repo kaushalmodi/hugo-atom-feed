@@ -33,17 +33,16 @@
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
     {{ with .Param "feed" }}
-        {{- $icon := .icon | default "icon-32.png" -}}
-        {{- $iconpaths := printf "static/img/%s" $icon -}}
-        {{- $iconpath := printf "img/%s" $icon -}}
-        {{- if (fileExists $iconpaths) }}
-            <icon>{{ $iconpath | absURL }}</icon>
+        {{/* For this to work, the $icon file should be present in the assets/ directory */}}
+        {{- $icon := .icon | default "icon.svg" -}}
+        {{- with resources.Get $icon -}}
+            <icon>{{ (. | fingerprint).Permalink }}</icon>
         {{- end }}
+
+        {{/* For this to work, the $logo file should be present in the assets/ directory */}}
         {{- $logo := .logo | default "logo.svg" -}}
-        {{- $logopaths := printf "static/img/%s" $logo -}}
-        {{- $logopath := printf "img/%s" $logo -}}
-        {{- if (fileExists $logopaths) }}
-            <logo>{{ $logopath | absURL }}</logo>
+        {{- with resources.Get $logo -}}
+            <logo>{{ (. | fingerprint).Permalink }}</logo>
         {{- end }}
     {{ end }}
     {{ with site.Author.name -}}
