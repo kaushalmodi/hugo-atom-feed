@@ -8,7 +8,7 @@
         {{- end -}}
     {{- end -}}
     {{- if .IsTranslated -}}
-        {{ $title = printf "%s %s" $title (index site.Data.i18n.languages .Lang) }}
+        {{ $title = printf "%s (%s)" $title (index site.Data.i18n.languages .Lang) }}
     {{- end -}}
     {{ printf `<title type="html"><![CDATA[%s]]></title>` $title | safeHTML }}
     {{ with (or (.Param "subtitle") (.Param "tagline")) }}
