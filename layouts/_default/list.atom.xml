@@ -10,6 +10,9 @@
         {{ site.Title -}}
         {{- if .IsTranslated }} ({{ index site.Data.i18n.languages .Lang }}){{ end -}}
     </title>
+    {{ with (or (.Param "subtitle") (.Param "tagline")) }}
+        <subtitle type="html">{{ . | safeHTML }}</subtitle>
+    {{ end }}
     {{ $output_formats := .OutputFormats }}
     {{ range $output_formats -}}
         {{- $rel := (or (and (eq "atom" (.Name | lower)) "self") "alternate") -}}
