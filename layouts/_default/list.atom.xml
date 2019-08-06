@@ -74,6 +74,10 @@
                 {{- $link := printf "%s?utm_source=atom_feed" .Permalink | safeHTML }}
                 {{- printf `<link href=%q rel="alternate" type="text/html" hreflang=%q />` $link .Lang | safeHTML }}
             {{- end }}
+            {{/* rel=related: See https://validator.w3.org/feed/docs/atom.html#link */}}
+            {{- range first 5 (site.RegularPages.Related .) }}
+                <link href="{{ .Permalink }}?utm_source=atom_feed" rel="related" type="text/html" title="{{ .Title }}" />
+            {{- end }}
             {{ with .Params.id }}
                 <id>{{ . | plainify }}</id>
             {{ else }}
