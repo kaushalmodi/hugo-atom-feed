@@ -1,17 +1,16 @@
 {{ printf `<?xml version="1.0" encoding="utf-8"?>` | safeHTML }} {{/* ref: https://validator.w3.org/feed/docs/atom.html */}}
 <feed xmlns="http://www.w3.org/2005/Atom"{{ with site.LanguageCode }} xml:lang="{{ . }}"{{ end }}>
     <generator uri="https://gohugo.io/" version="{{ hugo.Version }}">Hugo</generator>
-    <title>
+    {{ printf `<title type="html"><![CDATA[` | safeHTML }}
         {{- with .Title -}}
-            {{- if (not (eq . site.Title)) }}
-                {{ . }} on
-            {{ end }}
-        {{ end }}
-        {{ site.Title -}}
+            {{- if (not (eq . site.Title)) -}}
+                {{- . | safeHTML }} {{ i18n "feed_title_on" | default "on" }} {{ end }}
+        {{- end }}
+        {{- site.Title | safeHTML -}}
         {{- if .IsTranslated }} ({{ index site.Data.i18n.languages .Lang }}){{ end -}}
-    </title>
+    {{ printf `]]></title>` | safeHTML }}
     {{ with (or (.Param "subtitle") (.Param "tagline")) }}
-        <subtitle type="html">{{ . | safeHTML }}</subtitle>
+        {{ printf `<subtitle type="html"><![CDATA[%s]]></subtitle>` . | safeHTML }}
     {{ end }}
     {{ $output_formats := .OutputFormats }}
     {{ range $output_formats -}}
