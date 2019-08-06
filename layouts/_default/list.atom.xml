@@ -32,20 +32,22 @@
         {{- $copyright = $copyright | replace "&copy;" "©" -}}
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
+    {{- $icon := "icon-32.png" -}}
+    {{- $logo := "logo.svg" -}}
     {{ with .Param "feed" }}
-        {{- $icon := .icon | default "icon-32.png" -}}
-        {{- $iconpaths := printf "static/img/%s" $icon -}}
-        {{- $iconpath := printf "img/%s" $icon -}}
-        {{- if (fileExists $iconpaths) }}
-            <icon>{{ $iconpath | absURL }}</icon>
-        {{- end }}
-        {{- $logo := .logo | default "logo.svg" -}}
-        {{- $logopaths := printf "static/img/%s" $logo -}}
-        {{- $logopath := printf "img/%s" $logo -}}
-        {{- if (fileExists $logopaths) }}
-            <logo>{{ $logopath | absURL }}</logo>
-        {{- end }}
+        {{- $icon = .icon | default $icon -}}
+        {{- $logo = .logo | default $logo -}}
     {{ end }}
+    {{- $iconpaths := printf "static/img/%s" $icon -}}
+    {{- $iconpath := printf "img/%s" $icon -}}
+    {{- if (fileExists $iconpaths) }}
+        <icon>{{ $iconpath | absURL }}</icon>
+    {{- end }}
+    {{- $logopaths := printf "static/img/%s" $logo -}}
+    {{- $logopath := printf "img/%s" $logo -}}
+    {{- if (fileExists $logopaths) }}
+        <logo>{{ $logopath | absURL }}</logo>
+    {{- end }}
     {{ with site.Author.name -}}
         <author>
             <name>{{ . }}</name>
