@@ -43,7 +43,9 @@
     <id>{{ .Permalink }}</id>
     {{- $limit := (cond (le site.Config.Services.RSS.Limit 0) 65536 site.Config.Services.RSS.Limit) }}
     {{- $feed_sections := site.Params.feedSections | default site.Params.mainSections -}}
-    {{- range first $limit (where .Pages "Type" "in" $feed_sections) }}
+    {{/* Range through only the pages with a Type in $feed_sections */}}
+    {{- $pages := where .Pages "Type" "in" $feed_sections -}}
+    {{- range first $limit $pages }}
         {{ $page := . }}
         <entry>
             {{ printf `<title type="html"><![CDATA[%s]]></title>` .Title | safeHTML }}
