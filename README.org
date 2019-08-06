@@ -28,3 +28,14 @@ For the pages that you would like to exclude from the feed, set the
 #+begin_src toml
 disable_feed = true
 #+end_src
+
+* Pay attention to web server MIME type
+To fully comply with web standards, make sure your web server will send the correct [[https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Type][Content-Type HTTP response header]] for the feed file name ~atom.xml~. The correct response header looks like this:
+
+#+begin_src
+Content-Type: application/atom+xml; charset=UTF-8
+#+end_src
+
+Note that even though the feed file extension is ~.xml~, the [[https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/MIME_types][MIME type]] here is slightly adjusted from ~application/xml~ to ~application/atom+xml~.
+While this might not be important for many feed readers, it could still be a source of error so it is a good idea to play safe.
+How you could achieve this depends on the type of web server software you are running your website on. If you are hosting Hugo on Netlify, [[https://www.netlify.com/docs/headers-and-basic-auth/][this guide]] will be helpful for you.
