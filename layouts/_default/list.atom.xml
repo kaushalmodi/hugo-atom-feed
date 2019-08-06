@@ -32,6 +32,19 @@
         {{- $copyright = $copyright | replace "&copy;" "©" -}}
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
+    {{ with .Param "feed" }}
+        {{/* For this to work, the $icon file should be present in the assets/ directory */}}
+        {{- $icon := .icon | default "icon.svg" -}}
+        {{- with resources.Get $icon -}}
+            <icon>{{ (. | fingerprint).Permalink }}</icon>
+        {{- end }}
+
+        {{/* For this to work, the $logo file should be present in the assets/ directory */}}
+        {{- $logo := .logo | default "logo.svg" -}}
+        {{- with resources.Get $logo -}}
+            <logo>{{ (. | fingerprint).Permalink }}</logo>
+        {{- end }}
+    {{ end }}
     {{ if site.Author.name }} <!-- this is a single author map -->
         {{ with site.Author }}
             {{- $author := site.GetPage (printf "/%s/%s" "authors" .name) }}
@@ -193,7 +206,11 @@
     {{ else if $contributors }} <!-- simple contributor name -->
         <contributor><name>{{ $contributors | plainify }}</name></contributor>
     {{ end }}
-    <id>{{ .Permalink }}</id>
+    {{ with site.Params.id }}
+        <id>{{ . | plainify }}</id>
+    {{ else }}
+        <id>{{ .Permalink }}</id>
+    {{ end }}
     {{- $limit := (cond (le site.Config.Services.RSS.Limit 0) 65536 site.Config.Services.RSS.Limit) }}
     {{- $feed_sections := site.Params.feedSections | default site.Params.mainSections -}}
     {{/* Range through only the pages with a Type in $feed_sections */}}
@@ -207,7 +224,11 @@
                 {{- $link := printf "%s?utm_source=atom_feed" .Permalink | safeHTML }}
                 {{- printf `<link href=%q rel="alternate" type="text/html" hreflang=%q />` $link .Lang | safeHTML }}
             {{- end }}
-            <id>{{ .Permalink }}</id>
+            {{ with .Params.id }}
+                <id>{{ . | plainify }}</id>
+            {{ else }}
+                <id>{{ .Permalink }}</id>
+            {{ end }}
             {{ $authors := "" }}
             {{ with .Params.author }}
                 {{ $authors = . }}
