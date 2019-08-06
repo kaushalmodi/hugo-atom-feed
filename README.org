@@ -39,3 +39,6 @@ Content-Type: application/atom+xml; charset=UTF-8
 Note that even though the feed file extension is ~.xml~, the [[https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/MIME_types][MIME type]] here is slightly adjusted from ~application/xml~ to ~application/atom+xml~.
 While this might not be important for many feed readers, it could still be a source of error so it is a good idea to play safe.
 How you could achieve this depends on the type of web server software you are running your website on. If you are hosting Hugo on Netlify, [[https://www.netlify.com/docs/headers-and-basic-auth/][this guide]] will be helpful for you.
+
+Note that Google Chrome currently still [[https://bugs.chromium.org/p/chromium/issues/detail?id=84][features a bug]] for such MIME types so that automatic XML rendering is not performed.
+You may decide what is more important for you: Watching the rendered source in your browser once in a while or maximum feed reader compatibilty. ;-)
