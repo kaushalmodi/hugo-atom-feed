@@ -32,13 +32,13 @@
         {{- $copyright = $copyright | replace "&copy;" "©" -}}
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
-    {{- $icon := site.Params.feedicon | default "icon-32.png" -}}
+    {{- $icon := site.Params.feed.icon | default "icon-32.png" -}}
     {{- $iconpaths := printf "static/img/%s" $icon -}}
     {{- $iconpath := printf "img/%s" $icon -}}
     {{- if (fileExists $iconpaths) }}
         <icon>{{ $iconpath | absURL }}</icon>
     {{- end }}
-    {{- $logo := site.Params.feedlogo | default "logo.svg" -}}
+    {{- $logo := site.Params.feed.logo | default "logo.svg" -}}
     {{- $logopaths := printf "static/img/%s" $logo -}}
     {{- $logopath := printf "img/%s" $logo -}}
     {{- if (fileExists $logopaths) }}
