@@ -63,8 +63,10 @@
     {{ end }}
     {{- $limit := (cond (le site.Config.Services.RSS.Limit 0) 65536 site.Config.Services.RSS.Limit) }}
     {{- $feed_sections := site.Params.feedSections | default site.Params.mainSections -}}
-    {{/* Range through only the pages with a Type in $feed_sections */}}
+    {{/* Range through only the pages with a Type in $feed_sections. */}}
     {{- $pages := where .Pages "Type" "in" $feed_sections -}}
+    {{/* Remove the pages that have the disable_feed parameter set to true. */}}
+    {{- $pages = where $pages ".Params.disable_feed" "!=" true -}}
     {{- range first $limit $pages }}
         {{ $page := . }}
         <entry>

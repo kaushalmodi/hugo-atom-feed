@@ -20,3 +20,11 @@ To enable ATOM feeds for your site:
        # <domain>/tags/mytag/atom.xml, <domain>/categories/mycat/atom.xml
        taxonomy = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
      #+end_src
+
+* Selectively excluding pages from the feed
+For the pages that you would like to exclude from the feed, set the
+~disable_feed~ parameter in its front-matter to ~true~.
+
+#+begin_src toml
+disable_feed = true
+#+end_src
