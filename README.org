@@ -30,15 +30,44 @@ disable_feed = true
 #+end_src
 
 * Pay attention to web server MIME type
-To fully comply with web standards, make sure your web server will send the correct [[https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Type][Content-Type HTTP response header]] for the feed file name ~atom.xml~. The correct response header looks like this:
+To fully comply with web standards, make sure your web server will
+send the correct [[https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Type][/Content-Type/ HTTP response header]] for the feed file
+name ~atom.xml~. The correct response header looks like this:
 
-#+begin_src
+#+begin_example
 Content-Type: application/atom+xml; charset=UTF-8
+#+end_example
+
+Note that even though the feed file extension is ~.xml~, the [[https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/MIME_types][MIME type]]
+here is slightly adjusted from ~application/xml~ to
+~application/atom+xml~.
+
+While this might not be important for many feed readers, it could
+still be a source of error.  So it is a good idea to play safe.  How
+you could achieve this depends on the type of web server software you
+are running your website on.
+** Specifying the correct ~Content-Type~ for Netlify
+You can specify the /Content-Type/ of ~atom.*~ and ~*.atom~ files to
+be ~"application/atom+xml"~ using the below in your site's
+~netlify.toml~:
+#+begin_src toml
+,# Headers
+,## Content Type
+,### Atom feed
+[[headers]]
+  for = "atom.*"
+  [headers.values]
+    Content-Type = "application/atom+xml, charset=UTF-8"
+[[headers]]
+  for = "*.atom"
+  [headers.values]
+    Content-Type = "application/atom+xml, charset=UTF-8"
 #+end_src
-
-Note that even though the feed file extension is ~.xml~, the [[https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/MIME_types][MIME type]] here is slightly adjusted from ~application/xml~ to ~application/atom+xml~.
-While this might not be important for many feed readers, it could still be a source of error so it is a good idea to play safe.
-How you could achieve this depends on the type of web server software you are running your website on. If you are hosting Hugo on Netlify, [[https://www.netlify.com/docs/headers-and-basic-auth/][this guide]] will be helpful for you.
-
-Note that Google Chrome currently still [[https://bugs.chromium.org/p/chromium/issues/detail?id=84][features a bug]] for such MIME types so that automatic XML rendering is not performed.
-You may decide what is more important for you: Watching the rendered source in your browser once in a while or maximum feed reader compatibilty. ;-)
+*** References
+- [[https://www.netlify.com/docs/headers-and-basic-auth/]]
+- [[https://www.netlify.com/blog/2017/10/17/introducing-structured-redirects-and-headers/]]
+** Note about Google Chrome
+Note that Google Chrome currently still [[https://bugs.chromium.org/p/chromium/issues/detail?id=84][features a bug]] for such MIME
+types so that automatic XML rendering is not performed.  You may
+decide what is more important for you: watching the rendered source in
+your browser once in a while, or maximum feed reader compatibility 😉.
