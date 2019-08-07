@@ -33,8 +33,8 @@
     {{- end }}
     <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
     {{ with site.Copyright }}
-        {{- $copyright := . | replace "{year}" now.Year -}} {{/* In case the site.copyright uses a special string "{year}" */}}
-        {{- $copyright = $copyright | replace "&copy;" "©" -}}
+        {{- $copyright := replace . "{year}" now.Year -}} {{/* In case the site.copyright uses a special string "{year}" */}}
+        {{- $copyright = replace $copyright "&copy;" "©" -}}
         <rights>{{ $copyright | plainify }}</rights>
     {{- end }}
     {{ with .Param "feed" }}
