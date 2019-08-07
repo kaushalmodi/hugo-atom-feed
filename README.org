@@ -48,17 +48,17 @@ you could achieve this depends on the type of web server software you
 are running your website on.
 ** Specifying the correct ~Content-Type~ for Netlify
 You can specify the /Content-Type/ of ~atom.*~ and ~*.atom~ files to
-be ~"application/atom+xml"~ using the below in your site's
+be ~application/atom+xml; charset=UTF-8~ using the below in your site's
 ~netlify.toml~:
 #+begin_src toml
 [[headers]]
   for = "atom.*"
   [headers.values]
-    Content-Type = "application/atom+xml"
+    Content-Type = "application/atom+xml; charset=UTF-8"
 [[headers]]
   for = "*.atom"
   [headers.values]
-    Content-Type = "application/atom+xml"
+    Content-Type = "application/atom+xml; charset=UTF-8"
 #+end_src
 *** References
 - [[https://www.netlify.com/docs/headers-and-basic-auth/]]
