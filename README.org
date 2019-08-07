@@ -48,4 +48,4 @@ To adjust the feed's file name, you need to put the following lines to the site'
   permalinkable = false
 #+end_src
 
-THis will rename the feed file name from ~atom.xml~ to ~feed.atom~.
+This will rename the feed file name from ~atom.xml~ to ~feed.atom~.
