@@ -13,3 +13,7 @@
   mediaType = "application/atom+xml"
   baseName = "atom" # generated file = <baseName>.<mediaType."application/atom+xml".suffixes[0]> = atom.xml
   isPlainText = false
+  rel = "alternate"
+  isHTML = false
+  noUgly = true
+  permalinkable = false
