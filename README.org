@@ -28,3 +28,24 @@ For the pages that you would like to exclude from the feed, set the
 #+begin_src toml
 disable_feed = true
 #+end_src
+
+* Change file name of the feed
+You might want to change the file name or the file extension in particular from ~.xml~ to ~.atom~ to comply with [[https://filext.com/file-extension/ATOM][defined web standards]] and MIME types. It could also help for your web server to deliver the file using the correct MIME type, especially when you are not able to adjust the Content-Type HTTP header for a specific file name or directory path.
+
+To adjust the feed's file name, you need to put the following lines to the site's ~config.toml~:
+
+#+begin_src toml
+[mediaTypes."application/atom+xml"]
+  suffixes = ["atom"]
+[outputFormats.Atom]
+  name = "Atom"
+  mediaType = "application/atom+xml"
+  baseName = "feed" # generated file = <baseName>.<mediaType."application/atom+xml".suffixes[0]> = feed.atom
+  isPlainText = false
+  rel = "alternate"
+  isHTML = false
+  noUgly = true
+  permalinkable = false
+#+end_src
+
+This will rename the feed file name from ~atom.xml~ to ~feed.atom~.
