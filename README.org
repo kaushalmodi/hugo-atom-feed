@@ -54,11 +54,11 @@ be ~"application/atom+xml"~ using the below in your site's
 [[headers]]
   for = "atom.*"
   [headers.values]
-    Content-Type = "application/atom+xml, charset=UTF-8"
+    Content-Type = "application/atom+xml"
 [[headers]]
   for = "*.atom"
   [headers.values]
-    Content-Type = "application/atom+xml, charset=UTF-8"
+    Content-Type = "application/atom+xml"
 #+end_src
 *** References
 - [[https://www.netlify.com/docs/headers-and-basic-auth/]]
