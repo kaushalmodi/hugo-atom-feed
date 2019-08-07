@@ -123,7 +123,7 @@
                     {{ printf `<summary><![CDATA[%s<p>&nbsp;</p>%s]]></summary>` $description $continue | safeHTML -}}
                 {{ else }}
                     {{ if ne "" $subtitle }}
-                        {{ printf `<summary><![CDATA[%s%s]]></summary>` $subtitle $continue | safeHTML }}
+                        {{ printf `<summary><![CDATA[<p>%s</p><p>&nbsp;</p>%s]]></summary>` $subtitle $continue | safeHTML }}
                     {{ else }}
                         {{ printf `<summary><![CDATA[%s]]></summary>` $continue | safeHTML }}
                     {{ end }}
@@ -134,7 +134,7 @@
                         {{ printf `<content><![CDATA[%s]]></content>` $content | safeHTML }}
                     {{ else }}
                         {{ if ne "" $subtitle }}
-                            {{ printf `<summary><![CDATA[%s%s]]></summary>` $subtitle $continue | safeHTML }}
+                            {{ printf `<summary><![CDATA[<p>%s</p><p>&nbsp;</p>%s]]></summary>` $subtitle $continue | safeHTML }}
                         {{ else }}
                             {{ printf `<summary><![CDATA[%s]]></summary>` $continue | safeHTML }}
                         {{ end }}
