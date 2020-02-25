@@ -5,7 +5,7 @@ description = "Hugo theme component for creating ATOM feeds for Hugo 'list' page
 homepage = "https://scripter.co"
 tags = ["component", "feed", "atom", "output-format"]
 features = ["atom"]
-min_version = "0.53"
+min_version = "0.58"
 
 [author]
   name = "Kaushal Modi"
