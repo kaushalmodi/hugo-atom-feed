@@ -1,31 +1,37 @@
 *This is not a standalone theme. This is a Hugo theme component.*
 
-To enable ATOM feeds for your site:
+This component enables ATOM feeds for your site.
 
-1. Clone this repo to ~<your-site-dir>/themes/hugo-atom-feed~ directory.
-2. Add these your site's ~config.toml~:
-   - Add "hugo-atom-feed" as the *left-most element* of the ~theme~
-     list variable. For example:
-     #+begin_src toml
-     theme = ["hugo-atom-feed", "my-theme"]
-     #+end_src
-   - Add "ATOM" to all the Page Kinds for which you want to create
-     ATOM feeds:
-     #+begin_src toml
-     [outputs]
-       # <domain>/atom.xml
-       home = ["HTML", "RSS", "ATOM"]     # default = ["HTML", "RSS"]
-       # <domain>/posts/atom.xml
-       section = ["HTML", "RSS", "ATOM"]  # default = ["HTML", "RSS"]
-       # <domain>/tags/mytag/atom.xml, <domain>/categories/mycat/atom.xml
-       taxonomy = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
-     #+end_src
+* Requirements
+You need to install the latest version of Go from
+https://go.dev/doc/install because this theme component requires [[https://gohugo.io/hugo-modules/use-modules/][~hugo
+mod ..~ commands]] to work.
 
+This update on switch to using Hugo Modules was last tested with Hugo
+v0.92.0.
+* Installing
+1. Add this component as a new module to your site's TOML config file:
+   #+begin_src conf-toml
+   [module]
+     [[module.imports]]
+       path = "github.com/kaushalmodi/hugo-atom-feed"
+   #+end_src
+2. Add "ATOM" to all the Page Kinds for which you want to create ATOM
+   feeds:
+   #+begin_src conf-toml
+   [outputs]
+     # <domain>/atom.xml
+     home = ["HTML", "RSS", "ATOM"]     # default = ["HTML", "RSS"]
+     # <domain>/posts/atom.xml
+     section = ["HTML", "RSS", "ATOM"]  # default = ["HTML", "RSS"]
+     # <domain>/tags/mytag/atom.xml, <domain>/categories/mycat/atom.xml
+     taxonomy = ["HTML", "RSS", "ATOM"] # default = ["HTML", "RSS"]
+   #+end_src
 * Selectively excluding pages from the feed
 For the pages that you would like to exclude from the feed, set the
 ~disable_feed~ parameter in its front-matter to ~true~.
 
-#+begin_src toml
+#+begin_src conf-toml
 disable_feed = true
 #+end_src
 
@@ -50,7 +56,7 @@ are running your website on.
 You can specify the /Content-Type/ of ~atom.*~ and ~*.atom~ files to
 be ~application/atom+xml; charset=UTF-8~ using the below in your site's
 ~netlify.toml~:
-#+begin_src toml
+#+begin_src conf-toml
 [[headers]]
   for = "atom.*"
   [headers.values]
