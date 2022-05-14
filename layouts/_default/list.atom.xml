@@ -72,6 +72,8 @@
     {{- end -}}
     {{/* Remove the pages that have the disable_feed parameter set to true. */}}
     {{- $pages = where $pages ".Params.disable_feed" "!=" true -}}
+    {{/* Remove the pages that have the unlisted parameter set to true. */}}
+    {{- $pages = where $pages ".Params.unlisted" "!=" true -}}
     {{- range first $limit $pages }}
         {{ $page := . }}
         <entry>
