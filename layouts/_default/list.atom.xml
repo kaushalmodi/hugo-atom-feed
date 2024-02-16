@@ -111,7 +111,7 @@
                         {{ with site.GetPage (printf "/%s" $taxo) }}
                             {{ $taxonomy_page := . }}
                             {{ range $taxo_list }} <!-- Below, assuming pretty URLs -->
-                                <category scheme="{{ printf "%s%s" $taxonomy_page.Permalink (. | urlize) }}" term="{{ (. | urlize) }}" label="{{ . }}" />
+                                <category scheme="taxonomy:{{ printf "%s" $taxo | humanize }}" term="{{ (. | urlize) }}" label="{{ . }}" />
                             {{ end }}
                         {{ end }}
                     {{ end }}
